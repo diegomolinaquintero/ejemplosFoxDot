@@ -1,0 +1,103 @@
+print(SynthDefs) 
+print(Samples) 
+print(FxList) 
+print(Attributes)  
+print(PatternMethods)
+print(Scale.names()) 
+
+#-------------------------------------------------------------------------
+d1 >> play("V", dur=PDur(1,8),amp=0.08,lpf=600)
+
+Clock.bpm = 80
+Scale.default.set("minMaj")
+Root.default.set("D")
+
+def versa1():
+    c1 >> bell([0,2,4,6,8,1,3,5],dur=[8,2,3,4,1,0.5,0.25,0.25],chop=[2,4,32,16,12],mix=18,room=[1,4,6,8,10,20,0.5,0.1],sus=18, amp= [0.3,0.2,0.1,0.09]).every(8,"stutter", 4).every(4,"stutter", 2).every(12,"stutter", 8)
+    p1 >> stretch("SPORE_SAMPLES/TreeOfSephirot", dur=80, amp = 0.2, pan=[0]) 
+    a5 >> soprano([0,1,4,3,2],chop=[32,64,16,3,2,4,1], dur= 0.25,rate=PRange(1,10),amp=[0.09,0.1,0.08,0.1],drive=[2,5,1,8],echotime=4,room=20,cut=1/4).every(6,"stutter", 4).every(8,"stutter", 2).every(4,"stutter", 20).every(2,"stutter", 12).every(8,"stutter", 16)  
+    Clock.future(40, versa2)
+def versa2():
+    p1.stop()
+    a6 >> soprano([0,1,4,3,2],chop=[32,64,16,3,2,4,1], dur= [0.75,1],rate=PRange(1,10),amp=[0.09,0.1,0.08,0.1],drive=[2,5,1,8],echotime=4,room=20,cut=1/4,oct=7).every(3,"stutter", 4).every(8,"stutter", 2).every(4,"stutter", 8)  
+    Clock.future(40, versa3)
+def versa3():
+    c2 >> bell([0,2,4,6,8,1,3,5],dur=[8,1,0.5,0.25,0.25],chop=[2,4,32,16,12],mix=18,room=[1,4,6,8,10,20,0.5,0.1],sus=18, amp= [0.3,0.2,0.1,0.09]).every(8,"stutter", 4).every(4,"stutter", 2).every(12,"stutter", 8)
+    a1 >> pads([0,1,4,3],mix=PRange(5,8), dur= 4,rate=PRange(1,2),drive=0,chop=[16,32,48,1],cut=1/4,amp=0.2)
+    a5 >> soprano([0,1,4,3,2],chop=[32,64,16,3,2,4,1], dur= 0.25,rate=PRange(1,10),amp=[0.09,0.1,0.08,0.1],drive=[2,5,1,8],echotime=4,room=20,cut=1/8,oct=4).every(2,"stutter", 4).every(4,"stutter", 2)
+    p1 >> stretch("SHADOWS_SAMPLES/DeceptiveClones", dur=80, amp = 0.2, pan=[0])
+    d1 >> play("V", dur=PDur(3,8),amp=0.08,lpf=600).every(8,"stutter", 4)  
+    Clock.future(40, versa4)
+def versa4():
+    c3 >> bell([0,2,4,6,8,1,3,5],dur=PDur(3,8),chop=[2,4,32,16,12],mix=18,room=[1,4,6,8,10,20,0.5,0.1],sus=18, amp= [0.3,0.2,0.1,0.09]).every(8,"stutter", 4).every(4,"stutter", 2).every(12,"stutter", 8)
+    a1 >> pads([0,1,4,3],mix=PRange(5,8), dur= 4,rate=PRange(1,6),drive=0,chop=[16,32,48,1],cut=1/2,amp=0.2)
+    a7 >> soprano([0,1,4,3,2],chop=[32,64,16,3,2,4,1], dur= [1/8,1/2,1/4,1],rate=PRange(1,10),amp=[0.09,0.1,0.08,0.1],drive=[2,5,1,8],echotime=4,room=20,cut=1/4,oct=3).every(3,"stutter", 4).every(8,"stutter", 2).every(4,"stutter", 8).every(2,"stutter", 12).every(8,"stutter", 16)  
+    p1.stop()
+    d1 >> play("V", dur=PDur(3,8),amp=0.08,lpf=600)
+    d2 >> play("o", dur=PDur(2,8),amp=0.08,lpf=200)
+    Clock.future(40, choras1)
+def choras1():
+    c1.stop()
+    p1 >> stretch("SPORE_SAMPLES/PorousGrid", dur=80, amp = 0.2, pan=[0])
+    p2 >> stretch("SPORE_SAMPLES/MazeImpact2", dur=8, amp = 0.3, pan=[0]) 
+    a5.stop()
+    a6.stop()
+    c2.stop()
+    d1.stop()
+    c3.stop()
+    a7.stop()
+    d2.stop()
+    a1 >> pads([0,1,4,3],mix=PRange(5,8), dur= 4,rate=PRange(1,2),drive=2,chop=[16,32,48,1],cut=1/4,amp=1,glide=0.5,oct=3,vib=16,lpf=4000) 
+    Clock.future(40, choras2)
+def choras2()
+    a1.top()
+    p1.stop()
+    p2 >> stretch("SHADOWS_SAMPLES/DeceptiveClones", dur=16, amp = 1, pan=[0])
+    Clock.future(40, choras3)
+def choras3():
+    c1 >> bell([0,2,4,6,8,1,3,5],dur=[2,3,4,1,0.5,0.25,0.25],chop=[2,4,32,16,12],mix=18,room=18,sus=18,drive=[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0])
+    a7 >> bell([0,1,4,3,2],mix=PRange(8,18), dur= 0.05,oct=2,rate=PRange(-1,1),chop=[16,32,48,1],cut=1/4)
+    a1 >> pads([0,1,4,3],mix=PRange(5,8), dur= 4,rate=PRange(1,2),drive=0,chop=[16,32,48,1],cut=1/4)
+    a5 >> soprano([0,1,4,3,2],chop=[32,64,16,3,2,4,1], dur= 0.25,rate=PRange(1,10),amp=0.6,drive=[2,5,1,8],echotime=4,room=20,cut=1/4)
+    d1 >> play("V", dur=PDur(3,8),amp=0.5,lpf=10000)
+    d2 >> play("o", dur=PDur(2,8),amp=0.4,lpf=20000)
+    Clock.future(64, choras4)
+def choras4():
+    d2.stop()
+    d3.stop()
+    a1 >> pads([(0,6,9,11),(5,7,11,13),(1,7,10,12),(4,6,10,12)],dur=4,glide=2,oct=3,chop=1,vib=2,amp=0.3)
+    d1 >> play("V", dur=1/3,amp=0.08,lpf=600)
+    f1 >> ambi(dur=1,sus=3,amp=0.2)
+    Clock.future(8, finaal)
+def finaal():
+    a3.stop()
+    d1.stop()
+    d2.stop()
+    d3.stop()
+    a2.stop()
+    Clock.future(16, cierra1)
+def cierra1():
+    d2.stop()
+    d3.stop()
+    a1.stop()
+    a4.stop()
+    a1 >> pads([(0,6,9,11),(5,7,11,13),(1,7,10,12),(4,6,10,12)],dur=4,glide=2,oct=3,chop=1,vib=2,amp=0.3)
+    d1 >> play("V", dur=1/3,amp=0.08,lpf=600)
+    f1 >> ambi(dur=1,sus=3,amp=0.2)
+    Clock.future(8, cierra)
+def cierra():
+    a1.stop()
+    a4.stop()
+    f1.stop()
+    d1.stop()
+versa1()
+
+
+
+
+c1 >> bell([0,2,4,6,8,1,3,5],dur=[2,3,4,1,0.5,0.25,0.25],chop=[2,4,32,16,12],mix=18,room=18,sus=18,drive=[0,0,0,0,0,0,0,0,0,1,0,0,0,0,0])
+a7 >> bell([0,1,4,3,2],mix=PRange(8,18), dur= 0.05,oct=2,rate=PRange(-1,1),chop=[16,32,48,1],cut=1/4)
+a1 >> pads([0,1,4,3],mix=PRange(5,8), dur= 4,rate=PRange(1,2),drive=0,chop=[16,32,48,1],cut=1/4)
+a5 >> soprano([0,1,4,3,2],chop=[32,64,16,3,2,4,1], dur= 0.25,rate=PRange(1,10),amp=0.6,drive=[2,5,1,8],echotime=4,room=20,cut=1/4)
+d1 >> play("V", dur=PDur(3,8),amp=0.5,lpf=10000)
+d2 >> play("o", dur=PDur(2,8),amp=0.4,lpf=20000)
